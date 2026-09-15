@@ -4,14 +4,16 @@ class SimpleTokenizer:
     def __init__(self, vocab):
         self.str_to_int = vocab
         self.int_to_str = {i:s for s, i in vocab.items()}
-        print("int_to_str", self.int_to_str)
 
     def encode(self, text):
         preprocessed = re.split(r'([,.:;?_!"()\']|--|\s)', text)
         preprocessed = [
             item.strip() for item in preprocessed if item.strip()
         ]
+        preprocessed = [item if item in self.str_to_int 
+            else "<|unk|>" for item in preprocessed] # unknown token    
         ids = [self.str_to_int[item] for item in preprocessed]
+
         return ids
 
     def decode(self, ids):
