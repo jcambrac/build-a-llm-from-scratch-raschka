@@ -1,6 +1,7 @@
 import urllib.request
 import re
 from tokenizer import SimpleTokenizer
+import tiktoken
 
 url = ("https://raw.githubusercontent.com/rasbt/"
     "LLMs-from-scratch/main/ch02/01_main-chapter-code/"
@@ -52,3 +53,26 @@ print(text)
 tokenizer = SimpleTokenizer(vocab)
 print(tokenizer.encode(text))
 print(tokenizer.decode(tokenizer.encode(text)))
+
+tokenizer = tiktoken.get_encoding("gpt2")
+
+text = (
+    "Hello, do you like tea? <|endoftext|> In the sunlit terraces"
+     "of someunknownPlace."
+)
+
+integers = tokenizer.encode(text, allowed_special={"<|endoftext|>"})
+print(integers)
+
+strings = tokenizer.decode(integers)
+print(strings)
+
+unknown_strange_word = "akwirdamn"
+integers = tokenizer.encode(unknown_strange_word)
+print(integers)
+
+strings = tokenizer.decode(integers)
+print(strings)
+
+for item in integers:
+    print(item)
