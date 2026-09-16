@@ -75,4 +75,31 @@ strings = tokenizer.decode(integers)
 print(strings)
 
 for item in integers:
-    print(item)
+    print( tokenizer.decode([item]) , "->" , item)
+
+# print(raw_text)
+
+encoded_text = tokenizer.encode(raw_text)
+print(len(encoded_text))
+
+encoded_sample = encoded_text[50:]
+# print(encoded_sample)
+
+context_size = 4
+x = encoded_sample[:context_size]
+y = encoded_sample[1:context_size+1]
+
+print(f"x: {x}")
+print(f"y:      {y}")
+
+for i in range (1 , context_size + 1):
+    context = encoded_sample[:i]
+    target = encoded_sample[i]
+    print(f"context: {context} -> {target}")
+
+print("--------------------------------")
+
+for i in range(1 , context_size + 1):
+    string_context = tokenizer.decode(encoded_sample[:i])
+    string_target = tokenizer.decode([encoded_sample[i]])
+    print(f"context: {string_context} -> {string_target}")
