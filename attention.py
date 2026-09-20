@@ -63,3 +63,24 @@ print("context_vec_2:", context_vec_2)
 
 # the context vector is the weighted sum of the input vectors, where the weights are the attention weights
 # attention weights are calculated by the dot product of the query and the input vectors
+
+attn_scores = torch.empty(inputs.shape[0], inputs.shape[0]) # (6, 6) initialize empty tensor to store attention scores between all input vectors
+for i, x_i in enumerate(inputs): # loop through each input vector
+  for j, x_j in enumerate(inputs): # loop through each input vector
+    attn_scores[i, j] = torch.dot(x_i, x_j) # calculate the dot product of the input vectors
+print(attn_scores)
+
+attn_scores = inputs @ inputs.T # (6, 6) calculate the attention scores between all input vectors using matrix multiplication
+print(attn_scores)
+
+attn_weights = torch.softmax(attn_scores, dim=-1) # normalize the attention scores to get the attention weights # dim=-1 means the last dimension of the tensor, in this case the rows
+print(attn_weights)
+
+row_2_sum = sum([0.1385, 0.2379, 0.2333, 0.1240, 0.1082, 0.1581]) # sum of the second row of the attention weights
+print("Row 2 sum:", row_2_sum)
+print("All row sums:", attn_weights.sum(dim=-1)) # sum of all the rows of the attention weights # this should be 1 for each row
+
+all_context_vecs = attn_weights @ inputs # (6, 3) calculate the context vector for each input vector using the attention weights and the input vectors
+print(all_context_vecs)
+
+print("Previous 2nd context vector:", context_vec_2 , "is equal to the 2nd context vector in all_context_vecs:", all_context_vecs[1] ,  all_context_vecs[1] == context_vec_2)
