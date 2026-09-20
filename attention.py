@@ -31,3 +31,35 @@ for idx, element in enumerate(inputs[0]):
     res += inputs[0][idx] * query[idx]
 print("res:", res)
 print("torch.dot(inputs[0], query):", torch.dot(inputs[0], query))
+
+print ("--------------------------------")
+print("attn_scores_2:", attn_scores_2)
+
+attn_weights_2_tmp = attn_scores_2 / attn_scores_2.sum()
+print("Attention weights:", attn_weights_2_tmp)
+print("Sum of Attention weights:", attn_weights_2_tmp.sum())
+
+def softmax_naive(x):
+  return torch.exp(x) / torch.exp(x).sum(dim=0)
+
+attn_weights_2_softmax = softmax_naive(attn_scores_2)
+print("Attention weights softmax:", attn_weights_2_softmax)
+print("Sum of Attention weights softmax:", attn_weights_2_softmax.sum())
+
+attn_weights_2 = torch.softmax(attn_scores_2, dim=0) # finally attention weights use the standard softmax function
+print("Attention weights:", attn_weights_2)
+print("Sum:", attn_weights_2.sum())
+
+print ("--------------------------------")
+
+print("inputs:", inputs)
+query = inputs[1]         #1
+context_vec_2 = torch.zeros(query.shape)
+print("context_vec_2:", context_vec_2)
+for i, x_i in enumerate(inputs): # loop through each input vector
+  print("i:", i , "x_i:", x_i)
+  context_vec_2 += attn_weights_2[i]*x_i # multiply the attention weight by the input vector and add to the context vector
+print("context_vec_2:", context_vec_2)
+
+# the context vector is the weighted sum of the input vectors, where the weights are the attention weights
+# attention weights are calculated by the dot product of the query and the input vectors
