@@ -1,6 +1,8 @@
 import re
 
 class SimpleTokenizer:
+    """Split on punctuation and whitespace. Unknown words become <|unk|>."""
+
     def __init__(self, vocab):
         self.str_to_int = vocab
         self.int_to_str = {i:s for s, i in vocab.items()}
