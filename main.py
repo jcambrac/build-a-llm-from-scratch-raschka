@@ -1,3 +1,4 @@
+import os
 import urllib.request
 import re
 from tokenizer import SimpleTokenizer
@@ -8,7 +9,8 @@ url = ("https://raw.githubusercontent.com/rasbt/"
     "the-verdict.txt")
 
 file_path = "the-verdict.txt"
-urllib.request.urlretrieve(url, file_path)
+if not os.path.exists(file_path):
+    urllib.request.urlretrieve(url, file_path)
 
 with open(file_path, "r") as file:
     raw_text = file.read()
