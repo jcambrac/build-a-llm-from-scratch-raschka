@@ -46,10 +46,11 @@ class SelfAttention_v2(nn.Module):
         context_vec = attn_weights @ values
         return context_vec
 
-torch.manual_seed(123)
-sa_v1 = SelfAttention_v1(d_in=inputs.shape[1], d_out=2)
-print(sa_v1(inputs))
+if __name__ == "__main__":
+    torch.manual_seed(123)
+    sa_v1 = SelfAttention_v1(d_in=inputs.shape[1], d_out=2)
+    print(sa_v1(inputs))
 
-torch.manual_seed(789)
-sa_v2 = SelfAttention_v2(d_in=inputs.shape[1], d_out=2)
-print(sa_v2(inputs))
+    torch.manual_seed(789)
+    sa_v2 = SelfAttention_v2(d_in=inputs.shape[1], d_out=2)
+    print(sa_v2(inputs))
