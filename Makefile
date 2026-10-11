@@ -2,7 +2,7 @@ VENV := .venv
 PYTHON := $(VENV)/bin/python
 PIP := $(VENV)/bin/pip
 
-.PHONY: install run activate
+.PHONY: install run activate clean
 
 $(VENV):
 	python3 -m venv $(VENV)
@@ -19,3 +19,6 @@ run: install
 activate:
 	@echo "Run this in your shell instead:"
 	@echo "  source $(VENV)/bin/activate"
+
+clean:
+	rm -rf __pycache__
