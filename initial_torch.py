@@ -1,6 +1,5 @@
-from dataset import GPTDataset
+from dataset import GPTDataset, create_dataloader
 import tiktoken
-from dataset import create_dataloader
 import torch
 tokenizer = tiktoken.get_encoding("gpt2")
 
