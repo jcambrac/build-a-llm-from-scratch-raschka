@@ -12,7 +12,7 @@ file_path = "the-verdict.txt"
 if not os.path.exists(file_path):
     urllib.request.urlretrieve(url, file_path)
 
-with open(file_path, "r") as file:
+with open(file_path, "r", encoding="utf-8") as file:
     raw_text = file.read()
 
 print("Total characters in the file:", len(raw_text))
