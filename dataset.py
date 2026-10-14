@@ -3,6 +3,8 @@ from torch.utils.data import Dataset, DataLoader
 import tiktoken
 
 class GPTDataset(Dataset):
+    """Input and target chunks of the same length, targets shifted one token ahead."""
+
     def __init__(self, txt , tokenizer , max_length , stride):
         self.input_ids = []
         self.target_ids = []
