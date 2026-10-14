@@ -29,6 +29,7 @@ class GPTDataset(Dataset):
         return self.input_ids[idx], self.target_ids[idx]
 
 def create_dataloader(txt , batch_size=4 , max_length=256, stride=128, shuffle=True, drop_last=True,num_workers=0):
+    """Sliding-window GPT-2 dataloader. Each target is the input shifted by one token."""
     tokenizer = tiktoken.get_encoding("gpt2")
     dataset = GPTDataset(txt, tokenizer, max_length, stride)
     dataloader = DataLoader(
